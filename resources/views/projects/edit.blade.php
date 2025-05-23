@@ -1,6 +1,7 @@
 @extends('layouts.projects')
 @section('title', "Modifica il progetto")
 
+<a href="{{ route("projects.show", $project) }}"><- Torna al Progetto</a>
 @section('content')
 
     <form action="{{ route("projects.update", $project) }}" method="POST">
@@ -16,7 +17,7 @@
 
             {{-- Descrizione Progetto --}}
             <label for="description">Descrizione del Progetto</label>
-            <textarea type="text" name="description" id="description" rows="2" required>{{ $project->description }}</textarea>
+            <textarea type="text" name="description" id="description" rows="5" required>{{ $project->description }}</textarea>
 
             {{-- Immagine Progetto --}}
             <label for="cover_image">Immagine del Progetto</label>
