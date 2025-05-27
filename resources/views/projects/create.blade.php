@@ -28,6 +28,14 @@
             <label for="website_url">URL Pagina Web del Progetto</label>
             <input type="text" name="website_url" id="website_url">
 
+            {{-- Tipo del Progetto --}}
+            <label for="type_id">Tipo di Progetto</label>
+            <select name="type_id" id="type_id">
+                @foreach ($types as $type)
+                    <option value="{{ $type->id }}">{{ $type->name }}</option>
+                @endforeach      
+            </select>
+
         </div>
 
         {{-- Salva Progetto --}}

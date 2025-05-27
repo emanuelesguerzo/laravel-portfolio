@@ -22,6 +22,7 @@ class ProjectTableSeeder extends Seeder
             $newProject->cover_image = $project["cover_image"];
             $newProject->repo_url = $project["repo_url"];
             $newProject->website_url = $project["website_url"];
+            $newProject->type_id = $project["type_id"];
             $newProject->save();
 
         }

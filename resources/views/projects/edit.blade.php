@@ -1,41 +1,48 @@
 @extends('layouts.projects')
-@section('title', "Modifica il progetto")
+@section('title', 'Modifica il progetto')
 
-<a href="{{ route("projects.show", $project) }}"><- Torna al Progetto</a>
-@section('content')
+<a href="{{ route('projects.show', $project) }}"><- Torna al Progetto</a>
+        @section('content')
 
-    <form action="{{ route("projects.update", $project) }}" method="POST">
-        @csrf
+            <form action="{{ route('projects.update', $project) }}" method="POST">
+                @csrf
 
-        @method("PUT")
+                @method('PUT')
 
-        <div class="form-control d-flex flex-column mb-3">
+                <div class="form-control d-flex flex-column mb-3">
 
-            {{-- Titolo Progetto --}}
-            <label for="title">Titolo del Progetto</label>
-            <input type="text" name="title" id="title" value="{{ $project->title }}" required>
+                    {{-- Titolo Progetto --}}
+                    <label for="title">Titolo del Progetto</label>
+                    <input type="text" name="title" id="title" value="{{ $project->title }}" required>
 
-            {{-- Descrizione Progetto --}}
-            <label for="description">Descrizione del Progetto</label>
-            <textarea type="text" name="description" id="description" rows="5" required>{{ $project->description }}</textarea>
+                    {{-- Descrizione Progetto --}}
+                    <label for="description">Descrizione del Progetto</label>
+                    <textarea type="text" name="description" id="description" rows="5" required>{{ $project->description }}</textarea>
 
-            {{-- Immagine Progetto --}}
-            <label for="cover_image">Immagine del Progetto</label>
-            <input type="" name="cover_image" id="cover_image" value="{{ $project->cover_image }}">
+                    {{-- Immagine Progetto --}}
+                    <label for="cover_image">Immagine del Progetto</label>
+                    <input type="" name="cover_image" id="cover_image" value="{{ $project->cover_image }}">
 
-            {{-- URL Repo Progetto --}}
-            <label for="repo_url">URL Repo del Progetto</label>
-            <input type="text" name="repo_url" id="repo_url" value="{{ $project->repo_url }}" required>
+                    {{-- URL Repo Progetto --}}
+                    <label for="repo_url">URL Repo del Progetto</label>
+                    <input type="text" name="repo_url" id="repo_url" value="{{ $project->repo_url }}" required>
 
-            {{-- URL Sito Progetto --}}
-            <label for="website_url">URL Pagina Web del Progetto</label>
-            <input type="text" name="website_url" id="website_url" value="{{ $project->website_url }}">
+                    {{-- URL Sito Progetto --}}
+                    <label for="website_url">URL Pagina Web del Progetto</label>
+                    <input type="text" name="website_url" id="website_url" value="{{ $project->website_url }}">
 
-        </div>
+                    {{-- Tipo del Progetto --}}
+                    <label for="type_id">Tipo di Progetto</label>
+                    <select name="type_id" id="type_id">
+                        @foreach ($types as $type)
+                            <option value="{{ $type->id }}" {{ $project->type_id == $type->id ? "selected" : "" }}>{{ $type->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-        {{-- Salva Progetto --}}
-        <input type="submit" value="Salva">
+                {{-- Salva Progetto --}}
+                <input type="submit" value="Salva">
 
-    </form>
-    
-@endsection
+            </form>
+
+        @endsection
