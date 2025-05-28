@@ -16,7 +16,9 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::all();
-        return view("projects.index", compact("projects"));
+        $types = Type::all();
+        $technologies = Technology::all();
+        return view("projects.index", compact("projects", "types", "technologies"));
     }
 
     /**
@@ -106,6 +108,8 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        $project->technologies()->detach();
+        
         $project->delete();
 
         return redirect()->route("projects.index");

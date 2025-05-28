@@ -5,9 +5,9 @@
     <div class="d-flex gap-3 py-4">
         <a class="btn btn-outline-primary" href="{{ route('types.create') }}">Aggiungi un Tipo</a>
     </div>
-    <ul class="list-group">
+    <ul class="list-group mb-4">
         @foreach ($types as $type)
-            <li class="list-group-item">
+            <li class="list-group-item mb-2 rounded">
                 <h5>{{ $type->name }}</h5>
                 <p class="mb-0 text-muted mb-2">{{ $type->description }}</p>
                 <a class="btn btn-outline-success" href="{{ route('types.edit', $type) }}">Modifica</a>
