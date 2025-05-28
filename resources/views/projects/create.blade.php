@@ -1,9 +1,9 @@
 @extends('layouts.projects')
-@section('title', "Inserisci un nuovo progetto")
+@section('title', 'Inserisci un nuovo progetto')
 
 @section('content')
 
-    <form action="{{ route("projects.store")}}" method="POST">
+    <form action="{{ route('projects.store') }}" method="POST">
         @csrf
 
         <div class="form-control d-flex flex-column mb-3">
@@ -33,8 +33,20 @@
             <select name="type_id" id="type_id">
                 @foreach ($types as $type)
                     <option value="{{ $type->id }}">{{ $type->name }}</option>
-                @endforeach      
+                @endforeach
             </select>
+
+            {{-- Tecnologie del Progetto --}}
+            <label for="technology-section">Tecnologie Utilizzate</label>
+            <div id="technology-section" class="d-flex flex-wrap gap-3">
+                @foreach ($technologies as $technology)
+                    <div>
+                        <input type="checkbox" name="technologies[]" value="{{ $technology->id }}" id="technology-{{ $technology->id }}">
+                        <label class="user-select-none" for="technology-{{ $technology->id }}">{{ $technology->name }}</label>
+                    </div>
+                @endforeach
+            </div>
+
 
         </div>
 
@@ -42,5 +54,5 @@
         <input type="submit" value="Salva">
 
     </form>
-    
+
 @endsection

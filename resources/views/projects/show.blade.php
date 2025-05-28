@@ -4,6 +4,11 @@
 <a href="{{ route("projects.index") }}"><- Tutti i Progetti</a>
 
 @section('content')
+    <div>
+        @foreach ($project->technologies as $technology)
+            <span class="badge" style="background-color: {{ $technology->color }}">{{ $technology->name }}</span>
+        @endforeach
+    </div>
     <span>Tipo: {{ $project->type?->name }}</span>
     <div class="d-flex gap-3">
         <a class="btn btn-outline-success" href="{{ route('projects.edit', $project) }}">Modifica</a>

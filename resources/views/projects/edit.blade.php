@@ -35,9 +35,23 @@
                     <label for="type_id">Tipo di Progetto</label>
                     <select name="type_id" id="type_id">
                         @foreach ($types as $type)
-                            <option value="{{ $type->id }}" {{ $project->type_id == $type->id ? "selected" : "" }}>{{ $type->name }}</option>
+                            <option value="{{ $type->id }}" {{ $project->type_id == $type->id ? 'selected' : '' }}>
+                                {{ $type->name }}</option>
                         @endforeach
                     </select>
+
+                    {{-- Tecnologie Progetto --}}
+                    <label for="technology-section">Tecnologie Utilizzate</label>
+                    <div id="technology-section" class="d-flex flex-wrap gap-3">
+                        @foreach ($technologies as $technology)
+                            <div>
+                                <input type="checkbox" name="technologies[]" value="{{ $technology->id }}"
+                                    id="technology-{{ $technology->id }}" {{ $project->technologies->contains($technology->id) ? "checked" : "" }}>
+                                <label class="user-select-none"
+                                    for="technology-{{ $technology->id }}">{{ $technology->name }}</label>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
 
                 {{-- Salva Progetto --}}
