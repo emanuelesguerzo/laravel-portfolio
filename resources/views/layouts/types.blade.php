@@ -54,6 +54,7 @@
                                 <a class="dropdown-item" href="{{ url('profile') }}">{{ __('Profile') }}</a>
                                 <a class="dropdown-item" href="{{ url('projects') }}">{{ __('Projects') }}</a>
                                 <a class="dropdown-item" href="{{ url('types') }}">{{ __('Types') }}</a>
+                                <a class="dropdown-item" href="{{ url('technologies') }}">{{ __('Technologies') }}</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
