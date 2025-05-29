@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -41,6 +42,7 @@ class ProjectController extends Controller
 
         $newProject = new Project();
         $newProject->title = $data['title'];
+        $newProject->slug = Str::slug($data['title']);
         $newProject->description = $data['description'];
         $newProject->cover_image = $data['cover_image'];
         $newProject->repo_url = $data['repo_url'];
@@ -49,12 +51,11 @@ class ProjectController extends Controller
         $newProject->save();
 
         // Controllo se ricevo tecnologie
-        if($request->has("technologies")) {
+        if ($request->has("technologies")) {
             $newProject->technologies()->attach($data["technologies"]);
         }
 
         return redirect()->route("projects.show", $newProject);
-
     }
 
     /**
@@ -82,6 +83,11 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         $data = $request->all();
+
+        if ($project->title !== $data["title"]) {
+            $project->slug = Str::slug($data["title"]);
+        }
+        
         $project->title = $data["title"];
         $project->description = $data["description"];
         $project->cover_image = $data["cover_image"];
@@ -92,7 +98,7 @@ class ProjectController extends Controller
         $project->update();
 
         // Controllo se ci sono tecnologie
-        if($request->has("technologies")) {
+        if ($request->has("technologies")) {
             $project->technologies()->sync($data["technologies"]);
         } else {
             // Eliminiamo i dati del progetto attuale dalla tabella ponte
@@ -100,7 +106,6 @@ class ProjectController extends Controller
         }
 
         return redirect()->route("projects.show", $project);
-
     }
 
     /**
@@ -109,7 +114,7 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->technologies()->detach();
-        
+
         $project->delete();
 
         return redirect()->route("projects.index");
