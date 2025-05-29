@@ -4,7 +4,7 @@
 <a href="{{ route('projects.show', $project) }}"><- Torna al Progetto</a>
         @section('content')
 
-            <form action="{{ route('projects.update', $project) }}" method="POST">
+            <form action="{{ route('projects.update', $project) }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 @method('PUT')
@@ -21,7 +21,12 @@
 
                     {{-- Immagine Progetto --}}
                     <label for="cover_image">Immagine del Progetto</label>
-                    <input type="" name="cover_image" id="cover_image" value="{{ $project->cover_image }}">
+                    <input type="file" name="cover_image" id="cover_image">
+                    @if($project->cover_image)
+                    <div class="">
+                        <img class="img-fluid w-25" src="{{ asset("storage/" . $project->cover_image )}}" alt="Immagine della pagina {{ $project->title }}">
+                    </div>
+                    @endif
 
                     {{-- URL Repo Progetto --}}
                     <label for="repo_url">URL Repo del Progetto</label>
@@ -46,7 +51,8 @@
                         @foreach ($technologies as $technology)
                             <div>
                                 <input type="checkbox" name="technologies[]" value="{{ $technology->id }}"
-                                    id="technology-{{ $technology->id }}" {{ $project->technologies->contains($technology->id) ? "checked" : "" }}>
+                                    id="technology-{{ $technology->id }}"
+                                    {{ $project->technologies->contains($technology->id) ? 'checked' : '' }}>
                                 <label class="user-select-none"
                                     for="technology-{{ $technology->id }}">{{ $technology->name }}</label>
                             </div>

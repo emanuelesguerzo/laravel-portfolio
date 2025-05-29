@@ -3,7 +3,7 @@
 
 @section('content')
 
-    <form action="{{ route('projects.store') }}" method="POST">
+    <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="form-control d-flex flex-column mb-3">
@@ -18,7 +18,7 @@
 
             {{-- Immagine Progetto --}}
             <label for="cover_image">Immagine del Progetto</label>
-            <input type="" name="cover_image" id="cover_image">
+            <input type="file" name="cover_image" id="cover_image">
 
             {{-- URL Repo Progetto --}}
             <label for="repo_url">URL Repo del Progetto</label>

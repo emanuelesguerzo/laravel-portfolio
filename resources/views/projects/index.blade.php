@@ -11,9 +11,11 @@
         @foreach ($projects as $project)
             <div class="col-12 col-md-6 col-lg-4 col-xl-3">
                 <div class="card h-100 mb-3">
+                    @if($project->cover_image)
                     <div class="card-header">
-                        {{ $project->cover_image }}
+                        <img class="img-fluid w-100" style="height: 200px; object-fit: cover; object-position: top;" src="{{ asset("storage/" . $project->cover_image )}}" alt="Immagine della pagina {{ $project->title }}">
                     </div>
+                    @endif
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">{{ $project->title }}</h5>
                         <div class="mb-2">
@@ -24,7 +26,7 @@
                         <span class="mb-2">{{ $project->type->name }}</span>
                         <a class="repo-link" href="{{ $project->repo_url }}" target="_blank" rel="noopener noreferrer">Vedilo su GitHub!</a>
                         <span>{{ $project->website_url }}</span>
-                        <a href="{{ route('projects.show', $project->id) }}" class="btn btn-primary mt-auto">Dettagli</a>
+                        <a href="{{ route('projects.show', $project->slug) }}" class="btn btn-primary mt-auto">Dettagli</a>
                     </div>
                     <div class="card-footer d-flex justify-content-between">
                         <a class="btn btn-outline-success" href="{{ route('projects.edit', $project) }}">Modifica</a>

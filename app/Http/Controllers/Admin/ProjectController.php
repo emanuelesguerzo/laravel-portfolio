@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -44,10 +45,15 @@ class ProjectController extends Controller
         $newProject->title = $data['title'];
         $newProject->slug = Str::slug($data['title']);
         $newProject->description = $data['description'];
-        $newProject->cover_image = $data['cover_image'];
         $newProject->repo_url = $data['repo_url'];
         $newProject->website_url = $data['website_url'];
         $newProject->type_id = $data['type_id'];
+
+        if ($request->hasFile('cover_image')) {
+            $img_url = Storage::disk('public')->put('projects', $data['cover_image']);
+            $newProject->cover_image = $img_url;
+        }
+
         $newProject->save();
 
         // Controllo se ricevo tecnologie
@@ -87,13 +93,23 @@ class ProjectController extends Controller
         if ($project->title !== $data["title"]) {
             $project->slug = Str::slug($data["title"]);
         }
-        
+
         $project->title = $data["title"];
         $project->description = $data["description"];
-        $project->cover_image = $data["cover_image"];
         $project->repo_url = $data["repo_url"];
         $project->website_url = $data["website_url"];
         $project->type_id = $data["type_id"];
+
+        if ($request->hasFile('cover_image')) {
+            // Se esiste un'immagine precedente, la elimino
+            if ($project->cover_image && Storage::disk('public')->exists($project->cover_image)) {
+                Storage::disk('public')->delete($project->cover_image);
+            }
+
+            // Carico la nuova immagine
+            $img_url = Storage::disk('public')->put('projects', $data['cover_image']);
+            $project->cover_image = $img_url;
+        }
 
         $project->update();
 
@@ -114,6 +130,10 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->technologies()->detach();
+
+        if ($project->cover_image && Storage::disk('public')->exists($project->cover_image)) {
+            Storage::disk('public')->delete($project->cover_image);
+        }
 
         $project->delete();
 
